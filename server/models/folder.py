@@ -5,8 +5,8 @@ from .document import Document
 
 
 class BaseFolder(NamedModel):
-    folder_documents: List[Document]
+    documents: List[Document]
 
 
 class Folder(BaseFolder):
-    folder_subfolders: List[BaseFolder]
+    subfolders: List[BaseFolder]
