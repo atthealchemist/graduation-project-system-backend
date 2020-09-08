@@ -1,0 +1,21 @@
+# IDE and virtual env config folders
+.idea/
+.vscode/
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build and dist folders of nuitka
+*.build/
+*.dist/
+
+# Build and dist folders of pyinstaller
+build/
+dist/
+
+# Other stuff
+*.jpg
+*.png
