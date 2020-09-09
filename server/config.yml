@@ -1,0 +1,7 @@
+
+database:
+  engine: postgresql
+  url: localhost:5559
+  login: thealchemist
+  password: f0ckU
+  scheme: my_test_scheme

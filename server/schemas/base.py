@@ -1,15 +1,19 @@
-
+from datetime import datetime
 from uuid import UUID
 
 from fastapi_utils.api_model import APIModel
 
 
 class UniqueIdentifiedModel(APIModel):
-    uuid: UUID
+    id: UUID
+
+
+class TimestampedModel(APIModel):
+    created_at: datetime
+    updated_at: datetime
 
 
 class NamedModel(UniqueIdentifiedModel):
-    uuid: UUID
     name: str
 
 

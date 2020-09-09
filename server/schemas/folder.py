@@ -9,4 +9,5 @@ class BaseFolder(NamedModel):
 
 
 class Folder(BaseFolder):
-    subfolders: List[BaseFolder]
+    folders: List[BaseFolder]
+    documents: List[Document]
