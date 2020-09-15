@@ -1,4 +1,5 @@
 import sqlalchemy
+from string import Template
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -7,7 +8,9 @@ from server.utils import load_config
 config = load_config()
 db_config = config['database']
 
-DATABASE_URL = "{db_engine}://{db_user}:{db_passwd}@{db_url}/{db_scheme}".format(
+database_template = Template("$db_engine://$db_user:$db_passwd@$db_url/$db_scheme")
+
+DATABASE_URL = database_template.safe_substitute(
     db_engine=db_config['engine'],
     db_url=db_config['url'],
     db_user=db_config['user'],

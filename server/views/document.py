@@ -1,6 +1,6 @@
 from typing import List
 
-from ..main import app
+from server import app
 from ..schemas.document import Document
 
 
