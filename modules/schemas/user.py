@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .base import NamedModel
+from .base import NamedSchema
 
 
 class Role(Enum):
@@ -9,7 +9,7 @@ class Role(Enum):
     READ_ONLY = 2
 
 
-class User(NamedModel):
+class User(NamedSchema):
     password_hash: str
     login: str
     token: str

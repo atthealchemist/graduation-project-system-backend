@@ -3,11 +3,20 @@ from uuid import uuid4
 
 from fastapi import APIRouter
 
+from modules.database import DatabaseManager
+from modules.models.document import Document
+
 document = APIRouter()
 
 
 @document.post('/create', tags=['document'])
 def create_document():
+
+    params = ''
+    DatabaseManager.create(
+        Document,
+    )
+
     return dict(document_uuid=str(uuid4()), created=True, created_at=str(datetime.now()))
 
 
@@ -30,3 +39,8 @@ def get_document(document_uuid: str):
 def list_documents():
     docs = [dict(test='document')]
     return dict(documents=docs)
+
+
+@document.post('/import', tags=['document'])
+def import_documents():
+    pass

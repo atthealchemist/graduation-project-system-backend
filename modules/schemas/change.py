@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from .base import UniqueIdentifiedModel
+from .base import UniqueIdentifiedSchema
 from .document import Document
 
 
-class Change(UniqueIdentifiedModel):
+class Change(UniqueIdentifiedSchema):
     document: Document
     timestamp: datetime
     contents_before: bytes

@@ -1,16 +1,16 @@
 from typing import List
 from uuid import UUID
 
-from .base import UniqueIdentifiedModel
+from .base import UniqueIdentifiedSchema
 from .user import User
 
 
-class Answer(UniqueIdentifiedModel):
+class Answer(UniqueIdentifiedSchema):
     comment: UUID
     text: str
 
 
-class Comment(UniqueIdentifiedModel):
+class Comment(UniqueIdentifiedSchema):
     user: User
     text: str
 

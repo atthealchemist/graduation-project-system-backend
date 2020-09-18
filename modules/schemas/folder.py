@@ -1,10 +1,10 @@
 from typing import List
 
-from .base import NamedModel
+from .base import NamedSchema
 from .document import Document
 
 
-class BaseFolder(NamedModel):
+class BaseFolder(NamedSchema):
     documents: List[Document]
 
 
