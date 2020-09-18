@@ -1,32 +1,67 @@
-from pony.orm import db_session, commit, show
+from pony.orm import db_session, commit
 
 from modules.logger import ConsoleLogger
 from modules.models.base import DB
 from modules.utils import load_config
 
+logger = ConsoleLogger("DatabaseManager")
+
 
 def init_database():
     db_config = load_config(section='database')
-    mgr = DatabaseManager(
-        db_object=DB,
-        engine=db_config.get('engine'),
-        host=db_config.get('host'),
+
+    DB.bind(
+        provider=db_config.get('engine'),
         user=db_config.get('user'),
         password=db_config.get('password'),
-        db_name=db_config.get('db_name')
+        host=db_config.get('host'),
+        database=db_config.get('db_name')
     )
-    return mgr
+    logger.debug("Connecting to database {}@{}/{}... ok!".format(
+        db_config.get('user'),
+        db_config.get('host'),
+        db_config.get('db_name')
+    ))
+
+    logger.debug("Configuring database")
+    if not DB:
+        logger.error("Error: database is not initialized or created!")
+        return
+    logger.debug("Generate mapping: creating tables... ok!")
+    DB.generate_mapping(create_tables=True)
 
 
 class DatabaseManager:
+
+    @staticmethod
+    def find(table, query):
+        return DatabaseManager.get(table, query)
+
+    @staticmethod
+    def all(table):
+        with db_session:
+            entities = table.select()
+            return [e for e in entities]
+
+    @staticmethod
+    def get(table, query):
+        with db_session:
+            entities_list = [entity for entity in table.select(query)]
+            if len(entities_list) == 1:
+                entities_list = entities_list[0]
+            return entities_list
 
     @staticmethod
     def purge_db():
         with db_session:
             DB.drop_all_tables(with_all_data=True)
 
-    def add(self, table, **params):
-        logger = ConsoleLogger("DbManager::ADD")
+    @staticmethod
+    def add(table, **params):
+        DatabaseManager.create(table, **params)
+
+    @staticmethod
+    def create(table, **params):
         with db_session:
             for obj in table.select(lambda e: e.login == params.get('login')):
                 if obj:
@@ -35,17 +70,14 @@ class DatabaseManager:
             obj = table(**params)
             commit()
             logger.debug("Created new {}".format(obj))
-
-    def create(self, orm_obj, **params):
-        self.add(orm_obj, **params)
+            return obj
 
     @staticmethod
-    def delete(orm_obj):
-        DatabaseManager.remove(orm_obj)
+    def delete(table, uuid):
+        DatabaseManager.remove(table, uuid)
 
     @staticmethod
     def remove(table, uuid=''):
-        logger = ConsoleLogger("DbManager::ADD")
         with db_session:
             if not uuid:
                 logger.error('Are you kidding me? How can I drop user without identifier?')
@@ -56,38 +88,13 @@ class DatabaseManager:
 
     @staticmethod
     def update(table, uuid='', **params):
-        logger = ConsoleLogger("DbManager::UPDATE")
         with db_session:
             updated_entity = table.select(lambda e: e.id == uuid)
             updated_entity.set(**params)
             logger.debug("Updating {} object {} with next params {}".format(table, updated_entity, params))
             commit()
+            return updated_entity
 
     @staticmethod
     def edit(orm_obj, **params):
         DatabaseManager.update(orm_obj, **params)
-
-    def configure_db(self, db_object):
-        print("Configuring database")
-        if not db_object:
-            return
-        print("Generate mapping: creating tables... ok!")
-        db_object.generate_mapping(create_tables=True)
-
-    def __init__(self, db_object, engine, host, user, password, db_name, logger=None):
-        self.logger = logger
-        if not db_object:
-            return
-
-        db_object.bind(
-            provider=engine,
-            user=user,
-            password=password,
-            host=host,
-            database=db_name
-        )
-        print("Connecting to database {}@{}/{}... ok!".format(user, host, db_name))
-
-        self.configure_db(db_object)
-
-

@@ -11,7 +11,7 @@ class Document(TitledSchema, TimestampedSchema):
     slug: str
     url: str
     short_url: str
-    contents: bytes
+    contents: str
 
     references: List[str]
     links: List[Link]

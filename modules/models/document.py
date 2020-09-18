@@ -13,8 +13,8 @@ class Document(DB.Entity):
     name = Required(str, 32)
     title = Required(str, 96)
 
-    created_at = Required(datetime)
-    updated_at = Required(datetime)
+    created_at = Required(datetime, sql_default=datetime.now())
+    updated_at = Required(datetime, sql_default=datetime.now())
 
     slug = Required(str)
     url = Required(str)
