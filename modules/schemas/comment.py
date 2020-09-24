@@ -1,19 +1,17 @@
-from typing import List
+from datetime import datetime
+from typing import List, Optional
 from uuid import UUID
 
 from .base import UniqueIdentifiedSchema
-from .user import User
+from .user import UserSchema
 
 
-class Answer(UniqueIdentifiedSchema):
-    comment: UUID
+class CommentSchema(UniqueIdentifiedSchema):
+    user: UserSchema
     text: str
+    created_at: datetime
+    document_uuid: UUID
 
-
-class Comment(UniqueIdentifiedSchema):
-    user: User
-    text: str
-
-    answers: List[Answer]
+    answer_to: Optional[UUID]
 
 

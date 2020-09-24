@@ -1,13 +1,11 @@
 from typing import List
 
-from .base import NamedSchema
-from .document import Document
+from .base import NamedSchema, UniqueIdentifiedSchema
+from .document import DocumentSchema
 
 
-class BaseFolder(NamedSchema):
-    documents: List[Document]
+class FolderSchema(UniqueIdentifiedSchema):
+    display_name: str
+    documents: List[DocumentSchema]
 
-
-class Folder(BaseFolder):
-    folders: List[BaseFolder]
-    documents: List[Document]
+    folders: List[FolderSchema]

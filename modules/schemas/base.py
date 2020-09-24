@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from uuid import UUID
 
 from fastapi_utils.api_model import APIModel as APISchema
@@ -9,8 +10,8 @@ class UniqueIdentifiedSchema(APISchema):
 
 
 class TimestampedSchema(APISchema):
-    created_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
 
 
 class NamedSchema(UniqueIdentifiedSchema):

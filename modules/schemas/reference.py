@@ -1,6 +1,7 @@
+from uuid import UUID
+
 from .base import UniqueIdentifiedSchema
-from .document import Document
 
 
-class Reference(UniqueIdentifiedSchema):
-    document: Document
+class ReferenceSchema(UniqueIdentifiedSchema):
+    document_uuid: UUID

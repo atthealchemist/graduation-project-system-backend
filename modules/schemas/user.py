@@ -1,6 +1,8 @@
 from enum import Enum
 
-from .base import NamedSchema
+from pydantic import BaseModel
+
+from .base import UniqueIdentifiedSchema
 
 
 class Role(Enum):
@@ -9,16 +11,22 @@ class Role(Enum):
     READ_ONLY = 2
 
 
-class User(NamedSchema):
-    password_hash: str
+class UserSchema(BaseModel):
+    display_name: str
+    password: str
     login: str
-    token: str
-    role: Role = Role.READ_WRITE
 
+'''
+{
+  "display_name": "Hanyuu Furude",
+  "password": "thatqtg1Rl)",
+  "login": "hanyuu"
+}
+'''
 
-class Admin(User):
+class Admin(UserSchema):
     role = Role.ADMIN
 
 
-class Reader(User):
+class Reader(UserSchema):
     role = Role.READ_ONLY

@@ -1,21 +1,32 @@
-from typing import List
+from typing import List, Optional, ForwardRef
 
-from .asset import Asset
+from .asset import AssetSchema
 from .base import TitledSchema, TimestampedSchema
-from .change import Change
-from .comment import Comment
-from .link import Link
+from .user import UserSchema
+
+# !!! DO NOT REMOVE THOSE UNUSED SCHEMAS, THEY'RE USED BY FORWARD REF !!! #
+
+from .reference import ReferenceSchema
+from .link import LinkSchema
+from .access import AccessSchema
+from .change import ChangeSchema
+from .comment import CommentSchema
+from .access import AccessSchema
 
 
-class Document(TitledSchema, TimestampedSchema):
-    slug: str
-    url: str
-    short_url: str
-    contents: str
+class DocumentSchema(TitledSchema, TimestampedSchema):
+    slug: Optional[str]
+    url: Optional[str]
+    short_url: Optional[str]
+    contents: Optional[str]
 
-    references: List[str]
-    links: List[Link]
-    assets: List[Asset]
+    author: UserSchema
 
-    changes: List[Change]
-    comments: List[Comment]
+    references: Optional[List[ReferenceSchema]]
+    links: Optional[List[LinkSchema]]
+    assets: Optional[List[AssetSchema]]
+
+    changes: Optional[List[ChangeSchema]]
+    comments: Optional[List[CommentSchema]]
+    accesses: Optional[List[AccessSchema]]
+

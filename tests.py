@@ -1,5 +1,5 @@
 from modules.database import init_database
-from modules.models.user import User
+from modules.models._legacy.user import User
 from modules.utils import generate_jwt_token, encrypt_password, random_string, encrypt_base64
 
 

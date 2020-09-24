@@ -1,11 +1,11 @@
 from datetime import datetime
+from uuid import UUID
 
 from .base import UniqueIdentifiedSchema
-from .document import Document
 
 
-class Change(UniqueIdentifiedSchema):
-    document: Document
+class ChangeSchema(UniqueIdentifiedSchema):
+    document_uuid: UUID
     timestamp: datetime
     contents_before: bytes
     contents_after: bytes

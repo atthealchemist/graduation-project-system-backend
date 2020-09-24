@@ -1,7 +1,10 @@
+from uuid import UUID
+
 from pony.orm import db_session, commit
+from pony.orm.serialization import to_dict
 
 from modules.logger import ConsoleLogger
-from modules.models.base import DB
+from modules.models.generated import db as DB
 from modules.utils import load_config
 
 logger = ConsoleLogger("DatabaseManager")
@@ -27,8 +30,8 @@ def init_database():
     if not DB:
         logger.error("Error: database is not initialized or created!")
         return
-    logger.debug("Generate mapping: creating tables... ok!")
     DB.generate_mapping(create_tables=True)
+    logger.debug("Generate mapping: creating tables... ok!")
 
 
 class DatabaseManager:
@@ -41,15 +44,18 @@ class DatabaseManager:
     def all(table):
         with db_session:
             entities = table.select()
-            return [e for e in entities]
+            return [to_dict(e) for e in entities]
 
     @staticmethod
-    def get(table, query):
+    def get(table, query, as_entity=False):
         with db_session:
-            entities_list = [entity for entity in table.select(query)]
+            entities_list = list(filter(query, table.select()))
             if len(entities_list) == 1:
                 entities_list = entities_list[0]
-            return entities_list
+            result = to_dict(entities_list)
+            if as_entity:
+                result = entities_list
+        return result
 
     @staticmethod
     def purge_db():
@@ -63,10 +69,6 @@ class DatabaseManager:
     @staticmethod
     def create(table, **params):
         with db_session:
-            for obj in table.select(lambda e: e.login == params.get('login')):
-                if obj:
-                    logger.error("Object {} already exists in database!".format(obj))
-                    return
             obj = table(**params)
             commit()
             logger.debug("Created new {}".format(obj))
@@ -79,19 +81,16 @@ class DatabaseManager:
     @staticmethod
     def remove(table, uuid=''):
         with db_session:
-            if not uuid:
-                logger.error('Are you kidding me? How can I drop user without identifier?')
-                return
-            removed_entity = table.select(lambda e: e.id == uuid)
-            logger.debug("Removing {} from {}".format(removed_entity, table))
+            removed_entity = list(filter(lambda e: e.id == UUID(uuid), table.select()))[0]
+            logger.debug("Removing {} from {}".format(removed_entity, table.__name__))
             removed_entity.delete()
 
     @staticmethod
     def update(table, uuid='', **params):
         with db_session:
-            updated_entity = table.select(lambda e: e.id == uuid)
+            updated_entity = list(filter(lambda e: e.id == UUID(uuid), table.select()))[0]
             updated_entity.set(**params)
-            logger.debug("Updating {} object {} with next params {}".format(table, updated_entity, params))
+            logger.debug("Updating {} object {} with next params {}".format(table.__name__, updated_entity, params))
             commit()
             return updated_entity
 
