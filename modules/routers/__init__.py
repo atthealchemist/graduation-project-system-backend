@@ -5,6 +5,7 @@ from .user import user as user_router
 from .document import document as document_router
 from .migration import migration as migration_router
 from .space import space as space_router
+from .converter import converter as converter_router
 
 
 class ResponseStatus(Enum):

@@ -2,15 +2,28 @@ from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from modules.database import init_database
-from modules.routers import main_router, user_router, document_router, migration_router, space_router
+from modules.routers import main_router, user_router, document_router, migration_router, space_router, converter_router
 from modules.utils import load_config
 
 app = FastAPI()
 
 
 def configure_app():
+    origins = [
+        "http://localhost:3999",
+        "http://localhost:8000",
+    ]
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     app.include_router(main_router,
                        tags=['main'])
     app.include_router(document_router,
@@ -25,6 +38,9 @@ def configure_app():
     app.include_router(migration_router,
                        prefix='/migration',
                        tags=['migration'])
+    app.include_router(converter_router,
+                       prefix='/converter',
+                       tags=['converter'])
 
 
 def main():
