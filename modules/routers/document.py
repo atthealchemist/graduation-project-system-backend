@@ -20,7 +20,7 @@ def create_document(new_document: DocumentSchema):
     return dict(status='created', document_id=created_document.id)
 
 
-@document.delete('/{document_uuid}/delete', tags=['document'])
+@document.delete('/{document_uuid}', tags=['document'])
 def delete_document(document_uuid: str):
     DatabaseManager.delete(
         Document,
@@ -29,7 +29,7 @@ def delete_document(document_uuid: str):
     return dict(status='deleted', document_id=document_uuid)
 
 
-@document.patch('/{document_uuid}/update', tags=['document'])
+@document.patch('/{document_uuid}', tags=['document'])
 def update_document(document_uuid: str, doc: DocumentSchema):
     updated_document = DatabaseManager.update(
         Document,
