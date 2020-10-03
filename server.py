@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import uvicorn
@@ -47,7 +48,9 @@ def main():
     server = load_config(section='server')
     init_database()
     configure_app()
-    uvicorn.run(app, host=server.get('host'), port=server.get('port'))
+    # "Thank you", uvloop! I should handle this stuff in cause of your Windows "support"!
+    used_loop = 'asyncio' if 'win' in sys.platform else 'auto'
+    uvicorn.run(app, host=server.get('host'), port=server.get('port'), loop=used_loop)
 
 
 if __name__ == '__main__':
