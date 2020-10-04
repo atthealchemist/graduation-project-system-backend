@@ -7,3 +7,10 @@ database:
   user: postgres
   password: "!Graid363521!"
   db_name: graduation_project_db
+paths:
+  data:
+    linux: /var/gpks/
+    windows: %APPDATA%/gpks/
+publish:
+  docs:
+    path: docs

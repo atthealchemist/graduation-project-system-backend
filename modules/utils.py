@@ -1,6 +1,7 @@
 import random
 import re
 import string
+import sys
 from base64 import b64encode
 from datetime import datetime
 from hashlib import md5, sha256, pbkdf2_hmac
@@ -10,6 +11,16 @@ from uuid import UUID
 import yaml
 from jwcrypto.jwk import JWK
 from transliterate import translit
+
+
+def get_os():
+    os = 'linux'
+    platform = sys.platform
+    if platform.startswith('win'):
+        os = 'windows'
+    if platform.startswith('mac') or platform.startswith('darwin'):
+        os = 'mac'
+    return os
 
 
 def extract_entity(query_set, exclude_fields=None):

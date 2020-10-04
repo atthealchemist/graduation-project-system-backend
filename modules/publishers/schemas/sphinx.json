@@ -1,0 +1,74 @@
+{
+  "fields": [
+    {
+      "param": "sep",
+      "type": "bool",
+      "label": "Separate source and build dirs",
+      "value": false
+    },
+    {
+      "param": "project",
+      "type": "str",
+      "label": "Project name",
+      "value": ""
+    },
+    {
+      "param": "author",
+      "type": "str",
+      "label": "Author name(s)",
+      "value": "Lorem Ipsum"
+    },
+    {
+      "param": "release",
+      "type": "str",
+      "label": "Project release",
+      "value": "1.0.0"
+    },
+    {
+      "param": "language",
+      "type": "select",
+      "label": "Project language",
+      "choices": [
+        {"label": "English", "value": "en"},
+        {"label": "Russian", "value": "ru"}
+      ],
+      "value": "en"
+    },
+    {
+      "param": "suffix",
+      "type": "str",
+      "label": "Source file suffix",
+      "value": ".rst"
+    },
+    {
+      "param": "master",
+      "type": "str",
+      "label": "Master document name",
+      "value": "index"
+    },
+    {
+      "param": "master",
+      "type": "bool",
+      "label": "Use epub",
+      "value": false
+    },
+    {
+      "param": "extensions",
+      "type": "string",
+      "label": "Enabled extensions (separated by comma)",
+      "value": "viewcode"
+    },
+    {
+      "param": "makefile",
+      "type": "bool",
+      "label": "Create makefile",
+      "value": true
+    },
+    {
+      "param": "batchfile",
+      "type": "bool",
+      "label": "Create Windows command file",
+      "value": true
+    }
+  ]
+}

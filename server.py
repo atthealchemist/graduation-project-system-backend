@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from modules.database import init_database
-from modules.routers import main_router, user_router, document_router, migration_router, space_router, converter_router
+from modules.routers import *
 from modules.utils import load_config
 
 app = FastAPI()
@@ -42,6 +42,9 @@ def configure_app():
     app.include_router(converter_router,
                        prefix='/converter',
                        tags=['converter'])
+    app.include_router(publisher_router,
+                       prefix='/publisher',
+                       tags=['publisher'])
 
 
 def main():
