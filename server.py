@@ -33,6 +33,9 @@ def configure_app():
     app.include_router(user_router,
                        prefix='/users',
                        tags=['user'])
+    app.include_router(auth_router,
+                       prefix='/auth',
+                       tags=['auth'])
     app.include_router(space_router,
                        prefix='/spaces',
                        tags=['space'])
@@ -43,7 +46,7 @@ def configure_app():
                        prefix='/converter',
                        tags=['converter'])
     app.include_router(publisher_router,
-                       prefix='/publisher',
+                       prefix='/publish',
                        tags=['publisher'])
 
 

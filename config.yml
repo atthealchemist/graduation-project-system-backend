@@ -4,13 +4,14 @@ server:
 database:
   engine: postgres
   host: localhost
+  port: 5433
   user: postgres
-  password: "!Graid363521!"
+  password: "!graid363521!"
   db_name: graduation_project_db
 paths:
   data:
-    linux: /var/gpks/
-    windows: %APPDATA%/gpks/
+    linux: "/var/gpks/"
+    windows: "%APPDATA%/gpks/"
 publish:
   docs:
     path: docs

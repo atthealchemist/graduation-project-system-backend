@@ -5,7 +5,7 @@ from pony.orm.serialization import to_dict
 
 from modules.logger import ConsoleLogger
 from modules.models.generated import db as DB
-from modules.utils import load_config
+from modules.utils import load_config, extract_entity
 
 logger = ConsoleLogger("DatabaseManager")
 
@@ -18,6 +18,7 @@ def init_database():
         user=db_config.get('user'),
         password=db_config.get('password'),
         host=db_config.get('host'),
+        port=db_config.get('port'),
         database=db_config.get('db_name')
     )
     logger.debug("Connecting to database {}@{}/{}... ok!".format(
@@ -47,7 +48,7 @@ class DatabaseManager:
             return [to_dict(e) for e in entities]
 
     @staticmethod
-    def get(table, query, as_entity=False):
+    def get(table, query, as_entity=False, extract=False, extract_exclude_fields=()):
         with db_session:
             entities_list = list(filter(query, table.select()))
             if len(entities_list) == 1:
@@ -55,6 +56,8 @@ class DatabaseManager:
             result = to_dict(entities_list)
             if as_entity:
                 result = entities_list
+            if extract:
+                result = extract_entity(result, exclude_fields=extract_exclude_fields)
         return result
 
     @staticmethod

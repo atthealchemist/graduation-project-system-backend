@@ -54,7 +54,7 @@
     },
     {
       "param": "extensions",
-      "type": "string",
+      "type": "str",
       "label": "Enabled extensions (separated by comma)",
       "value": "viewcode"
     },

@@ -9,7 +9,7 @@ from modules.schemas.publisher import PublisherSchema
 publisher = APIRouter()
 
 
-@publisher.get('/publish/{publisher_name}/fields', tags=['publisher'])
+@publisher.get('/{publisher_name}/fields', tags=['publisher'])
 def publisher_fields(publisher_name: str):
     schema_path = Path() / 'modules' / 'publishers' / 'schemas' / f"{publisher_name}.json"
     if not schema_path.exists():
@@ -19,7 +19,7 @@ def publisher_fields(publisher_name: str):
     return dict(status="converted", fields=schema_dict.get('fields'))
 
 
-@publisher.post('/publish/{publisher_name}', tags=['publisher'])
+@publisher.post('/{publisher_name}', tags=['publisher'])
 def publish(new_publisher: PublisherSchema):
     current_publisher_cls = PublishManager.get_publisher(new_publisher.publisher_name)
     current_publisher_instance = current_publisher_cls(params=new_publisher.params)

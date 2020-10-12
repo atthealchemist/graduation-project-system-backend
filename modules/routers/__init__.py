@@ -7,6 +7,7 @@ from .migration import migration as migration_router
 from .space import space as space_router
 from .converter import converter as converter_router
 from .publisher import publisher as publisher_router
+from .auth import auth as auth_router
 
 
 class ResponseStatus(Enum):

@@ -7,8 +7,20 @@ from .base import UniqueIdentifiedSchema
 
 class Role(Enum):
     ADMIN = 0
-    READ_WRITE = 1
-    READ_ONLY = 2
+    GUEST = 1
+    USER = 2
+
+    @staticmethod
+    def is_admin(user):
+        return user.role == Role.ADMIN
+
+    @staticmethod
+    def is_guest(user):
+        return user.role == Role.GUEST
+
+    @staticmethod
+    def is_user(user):
+        return user.role == Role.USER
 
 
 class UserSchema(BaseModel):

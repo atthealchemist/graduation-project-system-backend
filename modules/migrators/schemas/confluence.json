@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "param": "url",
+      "type": "string",
+      "label": "Confluence instance URL",
+      "value": ""
+    },
+    {
+      "param": "username",
+      "type": "string",
+      "label": "Username",
+      "value": ""
+    },
+    {
+      "param": "password",
+      "type": "string",
+      "label": "Password (or API token)",
+      "value": ""
+    }
+  ]
+}

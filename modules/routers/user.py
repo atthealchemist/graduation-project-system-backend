@@ -1,12 +1,13 @@
 import json
 from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pony.orm.serialization import to_dict
 
 from modules.database import DatabaseManager
 from modules.models.generated import User, Space
 from modules.schemas.user import UserSchema, Role
+from modules.security import auth_scheme, logged_in_as_user
 from modules.utils import encrypt_password, generate_jwt_token, extract_entity
 
 user = APIRouter()
