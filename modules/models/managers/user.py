@@ -8,16 +8,16 @@ from modules.utils import encrypt_password, generate_jwt_token, extract_entity
 class UserManager:
 
     @staticmethod
-    def create_if_not_exists(user_schema):
+    def create_if_not_exists(login, password, display_name):
         created = False
-        user = UserManager.get_by_login(user_schema.login)
+        user = UserManager.get_by_login(login)
         if not user:
-            password_hash, password_salt = encrypt_password(user_schema.password)
+            password_hash, password_salt = encrypt_password(password)
 
             DatabaseManager.add(
                 User,
-                display_name=user_schema.display_name,
-                login=user_schema.login,
+                display_name=display_name,
+                login=login,
                 password_hash=password_hash,
                 password_salt=password_salt,
                 token=generate_jwt_token()

@@ -28,17 +28,10 @@ class UserSchema(BaseModel):
     password: str
     login: str
 
-'''
-{
-  "display_name": "Hanyuu Furude",
-  "password": "thatqtg1Rl)",
-  "login": "hanyuu"
-}
-'''
 
 class Admin(UserSchema):
     role = Role.ADMIN
 
 
 class Reader(UserSchema):
-    role = Role.READ_ONLY
+    role = Role.GUEST

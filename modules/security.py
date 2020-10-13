@@ -14,7 +14,7 @@ auth_scheme = OAuth2PasswordBearer(
 )
 
 
-def logged_in_as_user(token=Depends(auth_scheme)):
+def logged_in_as_user(token: str = Depends(auth_scheme)):
     user = UserManager.get_by_token(user_token=token)
     return extract_entity(to_dict(user), exclude_fields=('password_hash', 'password_salt', 'role'))
 

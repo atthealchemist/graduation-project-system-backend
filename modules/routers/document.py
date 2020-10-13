@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter
 
 from modules.database import DatabaseManager
@@ -42,7 +44,7 @@ def update_document(document_uuid: str, doc: DocumentSchema):
 
 @document.get('/{document_uuid}', tags=['document'])
 def get_document(document_uuid: str):
-    current_document = DatabaseManager.get(Document, lambda d: d.id == document_uuid)
+    current_document = DatabaseManager.get(Document, lambda d: d.id == document_uuid, extract=True)
     return dict(status='read_one', result=current_document)
 
 
@@ -53,5 +55,6 @@ def list_documents():
 
 
 @document.post('/import', tags=['document'])
-def import_documents():
-    pass
+def import_documents(documents: List[DocumentSchema]):
+    for doc in documents:
+        create_document(doc)
