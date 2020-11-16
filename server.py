@@ -1,13 +1,12 @@
 import sys
-from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from modules.database import init_database
+from modules.core.database import init_database
 from modules.routers import *
-from modules.utils import load_config
+from modules.core.utils import load_config
 
 app = FastAPI()
 

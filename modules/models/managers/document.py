@@ -1,5 +1,5 @@
-from modules.database import DatabaseManager
-from modules.models.generated import Document
+from modules.core.database import DatabaseManager
+from modules.models.document import Document
 
 
 class DocumentManager:

@@ -2,8 +2,8 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from modules.database import DatabaseManager
-from modules.models.generated import Space
+from modules.core.database import DatabaseManager
+from modules.models.space import Space
 from modules.utils import extract_entity
 
 space = APIRouter()

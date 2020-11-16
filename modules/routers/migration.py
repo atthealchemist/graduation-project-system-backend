@@ -3,9 +3,9 @@ from pathlib import Path
 
 from fastapi import APIRouter
 
-from modules.database import DatabaseManager
+from modules.core.database import DatabaseManager
 from modules.migrators.manager import MigrationManager
-from modules.models.generated import Document
+from modules.models.document import Document
 from modules.schemas.migrator import MigratorSchema
 
 migration = APIRouter()

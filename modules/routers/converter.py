@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from modules.converter import Converter
+from modules.core.converter import Converter
 from modules.schemas.converter import ConverterSchema
 
 converter = APIRouter()

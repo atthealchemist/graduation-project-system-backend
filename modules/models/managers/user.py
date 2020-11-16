@@ -1,8 +1,8 @@
 from pony.orm.serialization import to_dict
 
-from modules.database import DatabaseManager
-from modules.models.generated import User
-from modules.utils import encrypt_password, generate_jwt_token, extract_entity
+from modules.core.database import DatabaseManager
+from modules.models.user import User
+from modules.core.utils import encrypt_password, generate_jwt_token, extract_entity
 
 
 class UserManager:

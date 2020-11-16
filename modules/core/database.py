@@ -3,9 +3,9 @@ from uuid import UUID
 from pony.orm import db_session, commit
 from pony.orm.serialization import to_dict
 
-from modules.logger import ConsoleLogger
-from modules.models.generated import db as DB
-from modules.utils import load_config, extract_entity
+from modules.core.logger import ConsoleLogger
+from modules.models.db import db as database
+from modules.core.utils import load_config, extract_entity
 
 logger = ConsoleLogger("DatabaseManager")
 
@@ -13,7 +13,7 @@ logger = ConsoleLogger("DatabaseManager")
 def init_database():
     db_config = load_config(section='database')
 
-    DB.bind(
+    database.bind(
         provider=db_config.get('engine'),
         user=db_config.get('user'),
         password=db_config.get('password'),
@@ -28,10 +28,10 @@ def init_database():
     ))
 
     logger.debug("Configuring database")
-    if not DB:
+    if not database:
         logger.error("Error: database is not initialized or created!")
         return
-    DB.generate_mapping(create_tables=True)
+    database.generate_mapping(create_tables=True)
     logger.debug("Generate mapping: creating tables... ok!")
 
 
